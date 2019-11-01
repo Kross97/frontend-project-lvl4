@@ -1,11 +1,22 @@
-install:
-	npm install
+install: install-deps
 
 start:
+	npx nodemon --exec npx babel-node server/bin/slack.js
+
+install-deps:
+	npm install
+
+build:
+	rm -rf dist
 	npm run build
 
-publish: 
-	npm publish --dry-run
+test:
+	npm test
 
 lint:
-	npx eslint .
+	npx eslint . --ext js,jsx
+
+publish:
+	npm publish
+
+.PHONY: test
