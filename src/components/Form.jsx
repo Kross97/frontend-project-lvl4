@@ -71,7 +71,7 @@ render() {
   return (
     <div>
       <Form.Messages messages={currentMessages} />
-      <form onSubmit={this.hadleSubmit}>
+      <form id="form1" onSubmit={this.hadleSubmit}>
         <div className="form-group row no-gutters">
           <input onChange={this.changeText} value={text} type="text" className="form-control col-9" placeholder="Введите сообщение" />
           <input type="submit" disabled={text === ''} className="btn btn-info col-3" name="button1" value="Отправить" />
