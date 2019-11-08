@@ -1,9 +1,9 @@
 import axios from 'axios';
 import React from 'react';
 import { connect } from 'react-redux';
+import { Form, Button } from 'react-bootstrap';
 import routes from '../routes';
 import * as actions from '../actions';
-import Input from './Form_input';
 
 const mapProps = ({ channels: { text } }) => {
   const props = { text };
@@ -32,7 +32,10 @@ changeText = (e) => {
 render() {
   const { text } = this.props;
   return (
-    <Input onSubmit={this.addChannel} onChange={this.changeText} value={text} type="channel" placeholder="название" btnValue="Добавить" />
+    <Form className="form-group row no-gutters" onSubmit={this.addChannel}>
+      <Form.Control onChange={this.changeText} value={text} type="text" className="form-control col-7" placeholder="название" />
+      <Button type="submit" className="btn btn-info col-5" disabled={text === ''}>Добавить</Button>
+    </Form>
   );
 }
 }

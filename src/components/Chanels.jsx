@@ -56,34 +56,21 @@ addRenameId = (id) => (e) => {
 static AddChanel = AddChanel;
 
 /* eslint class-methods-use-this: ["error", {
-"exceptMethods": ["renderChannelRemove","renderChannels"] }] */
-
-renderChannelRemove(id) {
-  return (
-    <ButtonCLose onSubmit={this.addRemoveId(id)} onClick={this.showModals('remove')} text="x" variant="danger" />
-  );
-}
-
-renderChannelRename(id) {
-  return (
-    <ButtonCLose onSubmit={this.addRenameId(id)} onClick={this.showModals('rename')} text="R" variant="primary" />
-  );
-}
-
+"exceptMethods": ["renderChannels"] }] */
 renderChannels(channel) {
   const { currentChannelId } = this.props;
   const btnClass = cn({
     'items-channel btn btn-secondary': true,
-    'col-12': channel.id === 1 || channel.id === 2,
-    'col-8': channel.id !== 1 && channel.id !== 2,
+    'col-12': !channel.removable,
+    'col-8': channel.removable,
   });
   return (
     <span className="btn-channel container-fluid row no-gutters">
       <button onClick={this.changeChannel(channel.id)} disabled={channel.id === currentChannelId} key={channel.id} type="button" className={btnClass}>
         {channel.name}
       </button>
-      {channel.removable && this.renderChannelRemove(channel.id)}
-      {channel.removable && this.renderChannelRename(channel.id)}
+      {channel.removable && <ButtonCLose onSubmit={this.addRemoveId(channel.id)} onClick={this.showModals('remove')} text="x" variant="danger" />}
+      {channel.removable && <ButtonCLose onSubmit={this.addRenameId(channel.id)} onClick={this.showModals('rename')} text="R" variant="primary" />}
     </span>
   );
 }

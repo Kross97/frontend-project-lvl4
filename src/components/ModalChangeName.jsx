@@ -2,7 +2,6 @@ import React from 'react';
 import axios from 'axios';
 import {
   Modal,
-  Button,
   FormControl,
   InputGroup,
 } from 'react-bootstrap';

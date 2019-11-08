@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import routes from '../routes';
 import * as actions from '../actions';
-import Input from './Form_input';
 
 const Messages = (props) => {
   const { messages } = props;
@@ -72,7 +71,12 @@ render() {
   return (
     <div>
       <Form.Messages messages={currentMessages} />
-      <Input onSubmit={this.hadleSubmit} onChange={this.changeText} value={text} type="message" placeholder="Введите сообщение" btnValue="Отправить" />
+      <form onSubmit={this.hadleSubmit}>
+        <div className="form-group row no-gutters">
+          <input onChange={this.changeText} value={text} type="text" className="form-control col-9" placeholder="Введите сообщение" />
+          <input type="submit" disabled={text === ''} className="btn btn-info col-3" name="button1" value="Отправить" />
+        </div>
+      </form>
     </div>
   );
 }

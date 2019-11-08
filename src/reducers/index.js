@@ -52,15 +52,9 @@ const channels = createReducer({
       allChannels: newState.allChannels,
     };
   },
-  [actions.changeChannelId]: (state, action) => {
-    const { id } = action.payload;
-    return {
-      ...state,
-      currentChannelId: id,
-    };
-  },
+  [actions.changeChannelId]: (state, action) => ({ ...state, currentChannelId: action.payload.id }),
   [actions.updateTextChannel]: (state, action) => {
-    const { value } = action.payload;
+    const { payload: { value } } = action;
     return {
       ...state,
       text: value,
