@@ -9,27 +9,27 @@ import {
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 import routes from '../routes';
+import Footer from './Modal_Footer';
 
 const mapProps = ({ channels: { textRename } }) => ({ textRename });
 
 const allActions = {
-  updateText: actions.updateTextChannelRename,
-  resetText: actions.resetTextChannelRename,
+  updateTextChannelRename: actions.updateTextChannelRename,
+  resetTextChannelRename: actions.resetTextChannelRename,
 };
 
 class ModalChange extends React.Component {
 renameChannel = (id) => async (e) => {
   e.preventDefault();
-  const { handleClose, resetText, textRename } = this.props;
+  const { handleClose, resetTextChannelRename, textRename } = this.props;
   await axios.patch(routes.channelPath(id), { data: { attributes: { name: textRename } } });
-  resetText();
+  resetTextChannelRename();
   handleClose();
 }
 
-changeNameChannel = (e) => {
-  const { updateText } = this.props;
-  const { value } = e.target;
-  updateText({ value });
+changeNameChannel = ({ target }) => {
+  const { updateTextChannelRename } = this.props;
+  updateTextChannelRename({ value: target.value });
 }
 
 render() {
@@ -41,22 +41,10 @@ render() {
       </Modal.Header>
       <Modal.Body>
         <InputGroup className="mb-3">
-          <FormControl
-            onChange={this.changeNameChannel}
-            placeholder="Username"
-            aria-label="Username"
-            aria-describedby="basic-addon1"
-          />
+          <FormControl onChange={this.changeNameChannel} placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" />
         </InputGroup>
       </Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={this.renameChannel(id)}>
-             Изменить
-        </Button>
-        <Button variant="primary" onClick={handleClose}>
-             Отмена
-        </Button>
-      </Modal.Footer>
+      <Footer action={this.renameChannel(id)} handleClose={handleClose} valueBtn1="Изменить" valueBtn2="Отмена" />
     </Modal>
   );
 }

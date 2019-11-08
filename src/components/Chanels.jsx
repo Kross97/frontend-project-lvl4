@@ -1,11 +1,11 @@
 import React from 'react';
-import { Button, Form } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import cn from 'classnames';
 import * as actions from '../actions';
 import AddChanel from './AddChanel';
 import ModalRemove from './ModalRemoveChannel';
 import ModalRename from './ModalChangeName';
+import ButtonCLose from './Button_close';
 
 const mapProps = (state) => {
   const { channels } = state;
@@ -38,15 +38,10 @@ changeChannel = (id) => (e) => {
   changeChannelId({ id });
 };
 
-handleShowRemove = () => {
-  const { showRemove } = this.state;
-  this.setState({ showRemove: !showRemove });
-};
-
-handleShowRename = () => {
-  const { showRename } = this.state;
-  this.setState({ showRename: !showRename });
-};
+showModals = (type) => () => {
+  const { showRemove, showRename } = this.state;
+  if (type === 'remove') { this.setState({ showRemove: !showRemove }); } else if (type === 'rename') { this.setState({ showRename: !showRename }); }
+}
 
 addRemoveId = (id) => (e) => {
   e.preventDefault();
@@ -65,21 +60,13 @@ static AddChanel = AddChanel;
 
 renderChannelRemove(id) {
   return (
-    <Form className="col-2" onSubmit={this.addRemoveId(id)}>
-      <Button className="col-12" variant="danger" type="submit" onClick={this.handleShowRemove}>
-        <span>х</span>
-      </Button>
-    </Form>
+    <ButtonCLose onSubmit={this.addRemoveId(id)} onClick={this.showModals('remove')} text="x" variant="danger" />
   );
 }
 
 renderChannelRename(id) {
   return (
-    <Form className="col-2" onSubmit={this.addRenameId(id)}>
-      <Button className="col-12" variant="primary" type="submit" onClick={this.handleShowRename}>
-        <span>R</span>
-      </Button>
-    </Form>
+    <ButtonCLose onSubmit={this.addRenameId(id)} onClick={this.showModals('rename')} text="R" variant="primary" />
   );
 }
 
@@ -113,8 +100,8 @@ render() {
   return (
     <div style={styleDiv}>
       <Channels.AddChanel />
-      <ModalRemove id={idRemove} show={showRemove} handleClose={this.handleShowRemove} />
-      <ModalRename id={idRename} show={showRename} handleClose={this.handleShowRename} />
+      <ModalRemove id={idRemove} show={showRemove} handleClose={this.showModals('remove')} />
+      <ModalRename id={idRename} show={showRename} handleClose={this.showModals('rename')} />
       <div className="container-allChannels btn-group-vertical container-fluid">
         {channels.map((channel) => this.renderChannels(channel))}
       </div>

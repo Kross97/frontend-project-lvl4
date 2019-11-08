@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import routes from '../routes';
 import * as actions from '../actions';
+import Input from './Form_input';
 
 const mapProps = ({ channels: { text } }) => {
   const props = { text };
@@ -31,12 +32,7 @@ changeText = (e) => {
 render() {
   const { text } = this.props;
   return (
-    <form onSubmit={this.addChannel}>
-      <div className="form-group row no-gutters">
-        <input onChange={this.changeText} value={text} type="text" className="form-control col-7" placeholder="название" />
-        <input type="submit" disabled={text === ''} className="btn btn-info col-5" name="button1" value="Добавить" />
-      </div>
-    </form>
+    <Input onSubmit={this.addChannel} onChange={this.changeText} value={text} type="channel" placeholder="название" btnValue="Добавить" />
   );
 }
 }
