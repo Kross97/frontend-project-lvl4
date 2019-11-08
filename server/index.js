@@ -28,6 +28,7 @@ const setUpViews = (app) => {
 
 const setUpStaticAssets = (app) => {
   app.register(fastifyStatic, {
+    root: path.resolve(__dirname, '../dist/public'),
     prefix: '/assets',
   });
 };
@@ -35,6 +36,7 @@ const setUpStaticAssets = (app) => {
 export default (state = {}) => {
   const app = fastify();
   setUpViews(app);
+  setUpStaticAssets(app);
   const io = socket(app.server);
 
   addRoutes(app, io, state);

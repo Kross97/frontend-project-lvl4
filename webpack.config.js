@@ -1,8 +1,11 @@
 const path = require('path');
+require('babel-polyfill');
 
 module.exports = {
   mode: process.env.NODE_ENV || 'development',
-  entry: './src/index.js',
+  entry: {
+    app: ['babel-polyfill', './src/index.jsx'],
+  },
   externals: {
     gon: 'gon',
   },
