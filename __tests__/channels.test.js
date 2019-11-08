@@ -5,6 +5,14 @@ import buildApp from '../server';
 
 const buildUrl = (url) => path.join('/api/v1/', url);
 
+const curentChannel = (name) => ({
+  type: 'channels',
+  id: expect.any(Number),
+  attributes: {
+    id: expect.any(Number), name, removable: false,
+  },
+});
+
 test('get /channels', async () => {
   const app = buildApp();
   const response = await app.inject({
@@ -12,22 +20,8 @@ test('get /channels', async () => {
   });
   expect(response.statusCode).toEqual(200);
 
-  const channels = [
-    {
-      type: 'channels',
-      id: expect.any(Number),
-      attributes: {
-        id: expect.any(Number), name: 'general', removable: false,
-      },
-    },
-    {
-      type: 'channels',
-      id: expect.any(Number),
-      attributes: {
-        id: expect.any(Number), name: 'random', removable: false,
-      },
-    },
-  ];
+  const channels = [curentChannel('general'), curentChannel('random')];
+
   expect(JSON.parse(response.payload)).toEqual(
     expect.objectContaining({
       data: expect.arrayContaining(channels),
