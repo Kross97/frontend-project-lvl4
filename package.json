@@ -63,6 +63,7 @@
     "koa-webpack": "^5.2.4",
     "lodash": "^4.17.15",
     "point-of-view": "^3.6.0",
+    "pug": "^2.0.4",
     "react": "^16.11.0",
     "react-bootstrap": "^1.0.0-beta.14",
     "react-dom": "^16.11.0",
