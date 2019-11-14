@@ -65,13 +65,13 @@ renderChannels(channel) {
     'col-8': channel.removable,
   });
   return (
-    <span className="btn-channel container-fluid row no-gutters">
+    <div className="col-12 row no-gutters">
       <button onClick={this.changeChannel(channel.id)} disabled={channel.id === currentChannelId} key={channel.id} type="button" className={btnClass}>
         {channel.name}
       </button>
       {channel.removable && <ButtonCLose onSubmit={this.addRemoveId(channel.id)} onClick={this.showModals('remove')} text="x" variant="danger" />}
       {channel.removable && <ButtonCLose onSubmit={this.addRenameId(channel.id)} onClick={this.showModals('rename')} text="R" variant="primary" />}
-    </span>
+    </div>
   );
 }
 
@@ -85,11 +85,11 @@ render() {
     idRename,
   } = this.state;
   return (
-    <div style={styleDiv}>
+    <div className="col-2 no-gutters" style={styleDiv}>
       <Channels.AddChanel />
       <ModalRemove id={idRemove} show={showRemove} handleClose={this.showModals('remove')} />
       <ModalRename id={idRename} show={showRename} handleClose={this.showModals('rename')} />
-      <div className="container-allChannels btn-group-vertical container-fluid">
+      <div className="btn-group-vertical col-12 row no-gutters">
         {channels.map((channel) => this.renderChannels(channel))}
       </div>
     </div>

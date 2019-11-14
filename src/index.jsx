@@ -5,10 +5,9 @@ import ReactDom from 'react-dom';
 import { Provider } from 'react-redux';
 import io from 'socket.io-client';
 import { configureStore, getDefaultMiddleware } from 'redux-starter-kit';
-import thunk from 'redux-thunk';
 import faker from 'faker';
+import gon from 'gon';
 import cookie from 'js-cookie';
-import Channels from './components/Chanels';
 import Form from './components/Form';
 import reducer from './reducers';
 import * as actions from './actions';
@@ -28,16 +27,16 @@ const store = configureStore({
   devTools: window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
   preloadedState: {
     messages: {
-      allMessages: window.gon.messages,
+      allMessages: gon.messages,
       text: '',
     },
     channels: {
-      allChannels: window.gon.channels,
+      allChannels: gon.channels,
       text: '',
       currentChannelId: 1,
     },
   },
-  middleware: [...getDefaultMiddleware(), thunk],
+  middleware: [...getDefaultMiddleware()],
 });
 
 const socket = io('http://localhost:4000');
@@ -56,13 +55,6 @@ socket.on('removeChannel', (data) => {
 socket.on('renameChannel', (data) => {
   store.dispatch(actions.renameChannel({ channel: data.data.attributes }));
 });
-
-ReactDom.render(
-  <Provider store={store}>
-    <Channels />
-  </Provider>,
-  document.querySelector('#chanels'),
-);
 
 ReactDom.render(
   <Provider store={store}>

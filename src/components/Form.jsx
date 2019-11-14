@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import routes from '../routes';
 import * as actions from '../actions';
+import Channels from './Chanels';
 
 const Messages = (props) => {
   const { messages } = props;
@@ -69,14 +70,17 @@ render() {
   const { messages, text, currentChannelId } = this.props;
   const currentMessages = messages.filter((mes) => mes.channelId === currentChannelId);
   return (
-    <div>
-      <Form.Messages messages={currentMessages} />
-      <form onSubmit={this.hadleSubmit}>
-        <div className="form-group row no-gutters">
-          <input onChange={this.changeText} value={text} type="text" className="form-control col-9" placeholder="Введите сообщение" />
-          <input type="submit" disabled={text === ''} className="btn btn-info col-3" name="button1" value="Отправить" />
-        </div>
-      </form>
+    <div className="container-fluid row no-gutters">
+      <Channels />
+      <div className="col-10">
+        <Form.Messages messages={currentMessages} />
+        <form onSubmit={this.hadleSubmit}>
+          <div className="form-group row no-gutters">
+            <input onChange={this.changeText} value={text} type="text" className="form-control col-9" placeholder="Введите сообщение" />
+            <input type="submit" disabled={text === ''} className="btn btn-info col-3" name="button1" value="Отправить" />
+          </div>
+        </form>
+      </div>
     </div>
   );
 }
