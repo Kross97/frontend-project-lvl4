@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Form, Button } from 'react-bootstrap';
 import routes from '../routes';
-import * as actions from '../actions';
+import { channels } from '../reducers';
 
 const mapProps = ({ channels: { text } }) => {
   const props = { text };
@@ -11,8 +11,8 @@ const mapProps = ({ channels: { text } }) => {
 };
 
 const allActions = {
-  updateText: actions.updateTextChannel,
-  resetText: actions.resetTextChannel,
+  updateText: channels.actions.updateTextChannel,
+  resetText: channels.actions.resetTextChannel,
 };
 
 class AddChanel extends React.Component {

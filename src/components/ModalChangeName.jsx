@@ -6,15 +6,15 @@ import {
   InputGroup,
 } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import * as actions from '../actions';
+import { channels } from '../reducers';
 import routes from '../routes';
 import Footer from './Modal_Footer';
 
 const mapProps = ({ channels: { textRename } }) => ({ textRename });
 
 const allActions = {
-  updateTextChannelRename: actions.updateTextChannelRename,
-  resetTextChannelRename: actions.resetTextChannelRename,
+  updateTextChannelRename: channels.actions.updateTextChannelRename,
+  resetTextChannelRename: channels.actions.resetTextChannelRename,
 };
 
 class ModalChange extends React.Component {

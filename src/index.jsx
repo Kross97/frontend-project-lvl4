@@ -4,13 +4,12 @@ import React from 'react';
 import ReactDom from 'react-dom';
 import { Provider } from 'react-redux';
 import io from 'socket.io-client';
-import { configureStore, getDefaultMiddleware } from 'redux-starter-kit';
+import { configureStore } from 'redux-starter-kit';
 import faker from 'faker';
 import gon from 'gon';
 import cookie from 'js-cookie';
 import Form from './components/Form';
-import reducer from './reducers';
-import * as actions from './actions';
+import reducer, { messages, channels } from './reducers';
 
 let name = cookie.get('name');
 if (!name) {
@@ -36,24 +35,23 @@ const store = configureStore({
       currentChannelId: 1,
     },
   },
-  middleware: [...getDefaultMiddleware()],
 });
 
 const socket = io('http://localhost:4000');
 socket.on('newMessage', (data) => {
-  store.dispatch(actions.addMessageSucces({ message: data.data.attributes }));
+  store.dispatch(messages.actions.addMessageSucces({ message: data.data.attributes }));
 });
 
 socket.on('newChannel', (data) => {
-  store.dispatch(actions.addChannel({ channel: data.data.attributes }));
+  store.dispatch(channels.actions.addChannel({ channel: data.data.attributes }));
 });
 
 socket.on('removeChannel', (data) => {
-  store.dispatch(actions.removeChannel({ id: data.data.id }));
+  store.dispatch(channels.actions.removeChannel({ id: data.data.id }));
 });
 
 socket.on('renameChannel', (data) => {
-  store.dispatch(actions.renameChannel({ channel: data.data.attributes }));
+  store.dispatch(channels.actions.renameChannel({ channel: data.data.attributes }));
 });
 
 ReactDom.render(

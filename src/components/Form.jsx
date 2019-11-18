@@ -2,15 +2,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import routes from '../routes';
-import * as actions from '../actions';
 import Channels from './Chanels';
+import { messages } from '../reducers';
 
 const Messages = (props) => {
-  const { messages } = props;
+  const { allMessages } = props;
   const styleDiv = { overflow: 'auto', height: '780px', 'max-height': '780px' };
   return (
     <div className="list-group" style={styleDiv}>
-      {messages.length !== 0 && messages.map((mes) => (
+      {allMessages.length !== 0 && allMessages.map((mes) => (
         <div key={mes.id} className="list-group-item list-group-item-action">
           <div className="d-flex w-100 justify-content-between">
             <h5 className="mb-1">{mes.author}</h5>
@@ -24,18 +24,18 @@ const Messages = (props) => {
 };
 
 const mapProps = (state) => {
-  const { channels, messages } = state;
+  const { channels } = state;
   const props = {
-    text: messages.text,
-    messages: messages.allMessages,
+    text: state.messages.text,
+    messages: state.messages.allMessages,
     currentChannelId: channels.currentChannelId,
   };
   return props;
 };
 
 const allActions = {
-  updateText: actions.updateTextMessage,
-  resetText: actions.resetTextMessage,
+  updateText: messages.actions.updateTextMessage,
+  resetText: messages.actions.resetTextMessage,
 };
 
 class Form extends React.Component {
@@ -73,7 +73,7 @@ render() {
     <div className="container-fluid row no-gutters">
       <Channels />
       <div className="col-10">
-        <Form.Messages messages={currentMessages} />
+        <Form.Messages allMessages={currentMessages} />
         <form onSubmit={this.hadleSubmit}>
           <div className="form-group row no-gutters">
             <input onChange={this.changeText} value={text} type="text" className="form-control col-9" placeholder="Введите сообщение" />

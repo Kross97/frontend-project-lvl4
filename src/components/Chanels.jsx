@@ -1,24 +1,23 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import cn from 'classnames';
-import * as actions from '../actions';
+import { channels } from '../reducers';
 import AddChanel from './AddChanel';
 import ModalRemove from './ModalRemoveChannel';
 import ModalRename from './ModalChangeName';
 import ButtonCLose from './Button_close';
 
 const mapProps = (state) => {
-  const { channels } = state;
   const props = {
-    channels: channels.allChannels,
-    currentChannelId: channels.currentChannelId,
+    channels: state.channels.allChannels,
+    currentChannelId: state.channels.currentChannelId,
   };
   return props;
 };
 
 const allActions = {
-  changeChannelId: actions.changeChannelId,
-  removedChannelId: actions.removedChannelId,
+  changeChannelId: channels.actions.changeChannelId,
+  removedChannelId: channels.actions.removedChannelId,
 };
 
 class Channels extends React.Component {
