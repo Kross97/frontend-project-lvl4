@@ -42,14 +42,18 @@ showModals = (type) => () => {
   if (type === 'remove') { this.setState({ showRemove: !showRemove }); } else if (type === 'rename') { this.setState({ showRename: !showRename }); }
 }
 
-addRemoveId = (id) => (e) => {
+changesStateButton = (id, type) => (e) => {
   e.preventDefault();
-  this.setState({ idRemove: id });
-};
-
-addRenameId = (id) => (e) => {
-  e.preventDefault();
-  this.setState({ idRename: id });
+  const { showRemove, showRename } = this.state;
+  switch (type) {
+    case 'remove':
+      this.setState({ idRemove: id, showRemove: !showRemove });
+      break;
+    case 'rename':
+      this.setState({ idRename: id, showRename: !showRename });
+      break;
+    default:
+  }
 };
 
 static AddChanel = AddChanel;
@@ -57,6 +61,7 @@ static AddChanel = AddChanel;
 /* eslint class-methods-use-this: ["error", {
 "exceptMethods": ["renderChannels"] }] */
 renderChannels(channel) {
+  const buttonsCLose = [{ type: 'remove', text: 'x', style: 'danger' }, { type: 'rename', text: 'R', style: 'primary' }];
   const { currentChannelId } = this.props;
   const btnClass = cn({
     'items-channel btn btn-secondary': true,
@@ -68,8 +73,14 @@ renderChannels(channel) {
       <button onClick={this.changeChannel(channel.id)} disabled={channel.id === currentChannelId} key={channel.id} type="button" className={btnClass}>
         {channel.name}
       </button>
-      {channel.removable && <ButtonCLose onSubmit={this.addRemoveId(channel.id)} onClick={this.showModals('remove')} text="x" variant="danger" />}
-      {channel.removable && <ButtonCLose onSubmit={this.addRenameId(channel.id)} onClick={this.showModals('rename')} text="R" variant="primary" />}
+      {channel.removable && buttonsCLose.map((btn) => (
+        <ButtonCLose
+          key={btn.type}
+          onClick={this.changesStateButton(channel.id, btn.type)}
+          text={btn.text}
+          variant={btn.style}
+        />
+      ))}
     </div>
   );
 }
