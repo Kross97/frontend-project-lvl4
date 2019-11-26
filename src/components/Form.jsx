@@ -27,7 +27,7 @@ const mapProps = (state) => {
   const { channels } = state;
   const props = {
     text: state.messages.text,
-    messages: state.messages.allMessages,
+    allMessages: state.messages.allMessages,
     currentChannelId: channels.currentChannelId,
   };
   return props;
@@ -67,8 +67,8 @@ class Form extends React.Component {
 static Messages = Messages;
 
 render() {
-  const { messages, text, currentChannelId } = this.props;
-  const currentMessages = messages.filter((mes) => mes.channelId === currentChannelId);
+  const { allMessages, text, currentChannelId } = this.props;
+  const currentMessages = allMessages.filter((mes) => mes.channelId === currentChannelId);
   return (
     <div className="container-fluid row no-gutters">
       <Channels />

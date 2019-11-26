@@ -9,7 +9,7 @@ import ButtonCLose from './Button_close';
 
 const mapProps = (state) => {
   const props = {
-    channels: state.channels.allChannels,
+    allChannels: state.channels.allChannels,
     currentChannelId: state.channels.currentChannelId,
   };
   return props;
@@ -75,7 +75,7 @@ renderChannels(channel) {
 }
 
 render() {
-  const { channels } = this.props;
+  const { allChannels } = this.props;
   const styleDiv = { overflow: 'auto', height: '780px', 'max-height': '780px' };
   const {
     showRemove,
@@ -89,7 +89,7 @@ render() {
       <ModalRemove id={idRemove} show={showRemove} handleClose={this.showModals('remove')} />
       <ModalRename id={idRename} show={showRename} handleClose={this.showModals('rename')} />
       <div className="btn-group-vertical col-12 row no-gutters">
-        {channels.map((channel) => this.renderChannels(channel))}
+        {allChannels.map((channel) => this.renderChannels(channel))}
       </div>
     </div>
   );
