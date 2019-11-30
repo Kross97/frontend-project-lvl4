@@ -5,9 +5,9 @@ import { channels } from '../reducers';
 import AddChanel from './AddChanel';
 import ModalRemove from './ModalRemoveChannel';
 import ModalRename from './ModalChangeName';
-import ButtonCLose from './Button_close';
+import ButtonClose from './ButtonClose';
 
-const mapProps = (state) => {
+const mapStateToProps = (state) => {
   const props = {
     allChannels: state.channels.allChannels,
     currentChannelId: state.channels.currentChannelId,
@@ -15,7 +15,7 @@ const mapProps = (state) => {
   return props;
 };
 
-const allActions = {
+const actionCreators = {
   changeChannelId: channels.actions.changeChannelId,
   removedChannelId: channels.actions.removedChannelId,
 };
@@ -53,6 +53,7 @@ changesStateButton = (id, type) => (e) => {
       this.setState({ idRename: id, showRename: !showRename });
       break;
     default:
+      throw new Error('error type!');
   }
 };
 
@@ -61,7 +62,7 @@ static AddChanel = AddChanel;
 /* eslint class-methods-use-this: ["error", {
 "exceptMethods": ["renderChannels"] }] */
 renderChannels(channel) {
-  const buttonsCLose = [{ type: 'remove', text: 'x', style: 'danger' }, { type: 'rename', text: 'R', style: 'primary' }];
+  const buttonsCLoseAst = [{ type: 'remove', text: 'x', style: 'danger' }, { type: 'rename', text: 'R', style: 'primary' }];
   const { currentChannelId } = this.props;
   const btnClass = cn({
     'items-channel btn btn-secondary': true,
@@ -73,8 +74,8 @@ renderChannels(channel) {
       <button onClick={this.changeChannel(channel.id)} disabled={channel.id === currentChannelId} key={channel.id} type="button" className={btnClass}>
         {channel.name}
       </button>
-      {channel.removable && buttonsCLose.map((btn) => (
-        <ButtonCLose
+      {channel.removable && buttonsCLoseAst.map((btn) => (
+        <ButtonClose
           key={btn.type}
           onClick={this.changesStateButton(channel.id, btn.type)}
           text={btn.text}
@@ -87,7 +88,7 @@ renderChannels(channel) {
 
 render() {
   const { allChannels } = this.props;
-  const styleDiv = { overflow: 'auto', height: '780px', 'max-height': '780px' };
+  const styleDiv = { height: '780px' };
   const {
     showRemove,
     showRename,
@@ -95,7 +96,7 @@ render() {
     idRename,
   } = this.state;
   return (
-    <div className="col-2 no-gutters" style={styleDiv}>
+    <div style={styleDiv} className="col-2 no-gutters overflow-auto mh-100">
       <Channels.AddChanel />
       <ModalRemove id={idRemove} show={showRemove} handleClose={this.showModals('remove')} />
       <ModalRename id={idRename} show={showRename} handleClose={this.showModals('rename')} />
@@ -107,4 +108,4 @@ render() {
 }
 }
 
-export default connect(mapProps, allActions)(Channels);
+export default connect(mapStateToProps, actionCreators)(Channels);

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Form } from 'react-bootstrap';
 
-const ButtonCLose = (props) => {
+const ButtonClose = (props) => {
   const {
     onSubmit,
     onClick,
@@ -17,4 +17,4 @@ const ButtonCLose = (props) => {
   );
 };
 
-export default ButtonCLose;
+export default ButtonClose;

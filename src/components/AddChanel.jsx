@@ -5,12 +5,12 @@ import { Form, Button } from 'react-bootstrap';
 import routes from '../routes';
 import { channels } from '../reducers';
 
-const mapProps = ({ channels: { text } }) => {
+const mapStateToProps = ({ channels: { text } }) => {
   const props = { text };
   return props;
 };
 
-const allActions = {
+const actionCreators = {
   updateText: channels.actions.updateTextChannel,
   resetText: channels.actions.resetTextChannel,
 };
@@ -40,4 +40,4 @@ render() {
 }
 }
 
-export default connect(mapProps, allActions)(AddChanel);
+export default connect(mapStateToProps, actionCreators)(AddChanel);

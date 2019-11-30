@@ -8,11 +8,11 @@ import {
 import { connect } from 'react-redux';
 import { channels } from '../reducers';
 import routes from '../routes';
-import Footer from './Modal_Footer';
+import ModalFooter from './ModalFooter';
 
-const mapProps = ({ channels: { textRename } }) => ({ textRename });
+const mapStateToProps = ({ channels: { textRename } }) => ({ textRename });
 
-const allActions = {
+const actionCreators = {
   updateTextChannelRename: channels.actions.updateTextChannelRename,
   resetTextChannelRename: channels.actions.resetTextChannelRename,
 };
@@ -43,10 +43,10 @@ render() {
           <FormControl onChange={this.changeNameChannel} placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" />
         </InputGroup>
       </Modal.Body>
-      <Footer action={this.renameChannel(id)} handleClose={handleClose} valueBtn1="Изменить" valueBtn2="Отмена" />
+      <ModalFooter action={this.renameChannel(id)} handleClose={handleClose} valueBtn1="Изменить" valueBtn2="Отмена" />
     </Modal>
   );
 }
 }
 
-export default connect(mapProps, allActions)(ModalChange);
+export default connect(mapStateToProps, actionCreators)(ModalChange);

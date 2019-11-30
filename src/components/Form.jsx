@@ -2,14 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import routes from '../routes';
-import Channels from './Chanels';
+import Channels from './Channels';
 import { messages } from '../reducers';
 
 const Messages = (props) => {
   const { allMessages } = props;
-  const styleDiv = { overflow: 'auto', height: '780px', 'max-height': '780px' };
+  const styleDiv = { height: '780px' };
   return (
-    <div className="list-group" style={styleDiv}>
+    <div style={styleDiv} className="list-group overflow-auto  mh-100">
       {allMessages.length !== 0 && allMessages.map((mes) => (
         <div key={mes.id} className="list-group-item list-group-item-action">
           <div className="d-flex w-100 justify-content-between">
@@ -23,7 +23,7 @@ const Messages = (props) => {
   );
 };
 
-const mapProps = (state) => {
+const mapStateToProps = (state) => {
   const { channels } = state;
   const props = {
     text: state.messages.text,
@@ -33,36 +33,36 @@ const mapProps = (state) => {
   return props;
 };
 
-const allActions = {
+const actionCreators = {
   updateText: messages.actions.updateTextMessage,
   resetText: messages.actions.resetTextMessage,
 };
 
 class Form extends React.Component {
- hadleSubmit = async (e) => {
-   e.preventDefault();
-   const {
-     resetText,
-     text,
-     author,
-     currentChannelId,
-   } = this.props;
-   const time = new Date();
-   const message = {
-     text,
-     author,
-     time,
-     channelId: currentChannelId,
-   };
-   await axios.post(routes.channelMessagesPath(currentChannelId),
-     { data: { attributes: message } });
-   resetText();
- }
+hadleSubmit = async (e) => {
+  e.preventDefault();
+  const {
+    resetText,
+    text,
+    author,
+    currentChannelId,
+  } = this.props;
+  const time = new Date();
+  const message = {
+    text,
+    author,
+    time,
+    channelId: currentChannelId,
+  };
+  await axios.post(routes.channelMessagesPath(currentChannelId),
+    { data: { attributes: message } });
+  resetText();
+}
 
- changeText = (e) => {
-   const { updateText } = this.props;
-   updateText({ text: e.target.value });
- }
+changeText = (e) => {
+  const { updateText } = this.props;
+  updateText({ text: e.target.value });
+}
 
 static Messages = Messages;
 
@@ -86,4 +86,4 @@ render() {
 }
 }
 
-export default connect(mapProps, allActions)(Form);
+export default connect(mapStateToProps, actionCreators)(Form);

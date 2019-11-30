@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { Modal } from 'react-bootstrap';
 import routes from '../routes';
-import Footer from './Modal_Footer';
+import ModalFooter from './ModalFooter';
 
 export default class ModalRemove extends React.Component {
 removeChannel = (id) => async (e) => {
@@ -20,7 +20,7 @@ render() {
         <Modal.Title>Подтверждение удаления канала</Modal.Title>
       </Modal.Header>
       <Modal.Body>Вы желаете удалить канал?</Modal.Body>
-      <Footer action={this.removeChannel(id)} handleClose={handleClose} valueBtn1="Удалить" valueBtn2="Отмена" />
+      <ModalFooter action={this.removeChannel(id)} handleClose={handleClose} valueBtn1="Удалить" valueBtn2="Отмена" />
     </Modal>
   );
 }
