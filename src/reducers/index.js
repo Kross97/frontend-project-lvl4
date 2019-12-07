@@ -69,7 +69,36 @@ export const messages = createSlice({
   },
 });
 
+export const channelsActions = createSlice({
+  name: 'channelsActions',
+  initialState: {
+    showRemove: false,
+    showRename: false,
+    idRemove: 0,
+    idRename: 0,
+  },
+  reducers: {
+    isShowRemoveModal: (state) => {
+      const { showRemove } = state;
+      state.showRemove = !showRemove;
+    },
+    isShowRenameModal: (state) => {
+      const { showRename } = state;
+      state.showRename = !showRename;
+    },
+    uppdateIdRemove: (state, action) => {
+      const { id } = action.payload;
+      state.idRemove = id;
+    },
+    uppdateIdRename: (state, action) => {
+      const { id } = action.payload;
+      state.idRename = id;
+    },
+  },
+});
+
 export default combineReducers({
   messages: messages.reducer,
   channels: channels.reducer,
+  channelsActions: channelsActions.reducer,
 });

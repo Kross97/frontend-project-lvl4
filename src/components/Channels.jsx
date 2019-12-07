@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import cn from 'classnames';
-import { channels } from '../reducers';
+import { channels, channelsActions } from '../reducers';
 import AddChanel from './AddChanel';
 import ModalRemove from './ModalRemoveChannel';
 import ModalRename from './ModalChangeName';
@@ -11,6 +11,10 @@ const mapStateToProps = (state) => {
   const props = {
     allChannels: state.channels.allChannels,
     currentChannelId: state.channels.currentChannelId,
+    showRemove: state.channelsActions.showRemove,
+    showRename: state.channelsActions.showRename,
+    idRemove: state.channelsActions.idRemove,
+    idRename: state.channelsActions.idRename,
   };
   return props;
 };
@@ -18,19 +22,13 @@ const mapStateToProps = (state) => {
 const actionCreators = {
   changeChannelId: channels.actions.changeChannelId,
   removedChannelId: channels.actions.removedChannelId,
+  isShowRemoveModal: channelsActions.actions.isShowRemoveModal,
+  isShowRenameModal: channelsActions.actions.isShowRenameModal,
+  uppdateIdRemove: channelsActions.actions.uppdateIdRemove,
+  uppdateIdRename: channelsActions.actions.uppdateIdRename,
 };
 
 class Channels extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      showRemove: false,
-      showRename: false,
-      idRemove: 0,
-      idRename: 0,
-    };
-  }
-
 changeChannel = (id) => (e) => {
   e.preventDefault();
   const { changeChannelId } = this.props;
@@ -38,19 +36,26 @@ changeChannel = (id) => (e) => {
 };
 
 showModals = (type) => () => {
-  const { showRemove, showRename } = this.state;
-  if (type === 'remove') { this.setState({ showRemove: !showRemove }); } else if (type === 'rename') { this.setState({ showRename: !showRename }); }
+  const { isShowRemoveModal, isShowRenameModal } = this.props;
+  if (type === 'remove') { isShowRemoveModal(); } else if (type === 'rename') { isShowRenameModal(); }
 }
 
 changesStateButton = (id, type) => (e) => {
   e.preventDefault();
-  const { showRemove, showRename } = this.state;
+  const {
+    isShowRemoveModal,
+    isShowRenameModal,
+    uppdateIdRemove,
+    uppdateIdRename,
+  } = this.props;
   switch (type) {
     case 'remove':
-      this.setState({ idRemove: id, showRemove: !showRemove });
+      uppdateIdRemove({ id });
+      isShowRemoveModal();
       break;
     case 'rename':
-      this.setState({ idRename: id, showRename: !showRename });
+      uppdateIdRename({ id });
+      isShowRenameModal();
       break;
     default:
       throw new Error('error type!');
@@ -87,16 +92,15 @@ renderChannels(channel) {
 }
 
 render() {
-  const { allChannels } = this.props;
-  const styleDiv = { height: '780px' };
   const {
+    allChannels,
     showRemove,
     showRename,
     idRemove,
     idRename,
-  } = this.state;
+  } = this.props;
   return (
-    <div style={styleDiv} className="col-2 no-gutters overflow-auto mh-100">
+    <div className="col-2 no-gutters overflow-auto mh-100">
       <Channels.AddChanel />
       <ModalRemove id={idRemove} show={showRemove} handleClose={this.showModals('remove')} />
       <ModalRename id={idRename} show={showRename} handleClose={this.showModals('rename')} />

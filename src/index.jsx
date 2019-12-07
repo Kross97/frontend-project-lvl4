@@ -8,7 +8,7 @@ import { configureStore } from 'redux-starter-kit';
 import faker from 'faker';
 import gon from 'gon';
 import cookie from 'js-cookie';
-import Form from './components/Form';
+import Application from './components/Application';
 import reducer, { messages, channels } from './reducers';
 
 let name = cookie.get('name');
@@ -22,8 +22,6 @@ if (process.env.NODE_ENV !== 'production') {
 
 const store = configureStore({
   reducer,
-  // eslint-disable-next-line no-underscore-dangle
-  devTools: window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
   preloadedState: {
     messages: {
       allMessages: gon.messages,
@@ -34,10 +32,16 @@ const store = configureStore({
       text: '',
       currentChannelId: 1,
     },
+    channelsActions: {
+      showRemove: false,
+      showRename: false,
+      idRemove: 0,
+      idRename: 0,
+    },
   },
 });
-
-const socket = io('http://localhost:4000');
+// eslint-disable-next-line no-restricted-globals
+const socket = io(location.href);
 socket.on('newMessage', (data) => {
   store.dispatch(messages.actions.addMessageSucces({ message: data.data.attributes }));
 });
@@ -56,7 +60,7 @@ socket.on('renameChannel', (data) => {
 
 ReactDom.render(
   <Provider store={store}>
-    <Form author={name} />
+    <Application author={name} />
   </Provider>,
   document.querySelector('#chat'),
 );

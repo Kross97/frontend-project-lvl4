@@ -7,9 +7,8 @@ import { messages } from '../reducers';
 
 const Messages = (props) => {
   const { allMessages } = props;
-  const styleDiv = { height: '780px' };
   return (
-    <div style={styleDiv} className="list-group overflow-auto  mh-100">
+    <div className="list-group overflow-auto  mh-93">
       {allMessages.length !== 0 && allMessages.map((mes) => (
         <div key={mes.id} className="list-group-item list-group-item-action">
           <div className="d-flex w-100 justify-content-between">
@@ -38,7 +37,7 @@ const actionCreators = {
   resetText: messages.actions.resetTextMessage,
 };
 
-class Form extends React.Component {
+class Application extends React.Component {
 hadleSubmit = async (e) => {
   e.preventDefault();
   const {
@@ -73,8 +72,8 @@ render() {
     <div className="container-fluid row no-gutters">
       <Channels />
       <div className="col-10">
-        <Form.Messages allMessages={currentMessages} />
-        <form onSubmit={this.hadleSubmit}>
+        <Application.Messages allMessages={currentMessages} />
+        <form className=" footer navbar-fixed-bottom" onSubmit={this.hadleSubmit}>
           <div className="form-group row no-gutters">
             <input onChange={this.changeText} value={text} type="text" className="form-control col-9" placeholder="Введите сообщение" />
             <input type="submit" disabled={text === ''} className="btn btn-info col-3" name="button1" value="Отправить" />
@@ -86,4 +85,4 @@ render() {
 }
 }
 
-export default connect(mapStateToProps, actionCreators)(Form);
+export default connect(mapStateToProps, actionCreators)(Application);
