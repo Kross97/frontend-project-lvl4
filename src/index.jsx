@@ -7,6 +7,7 @@ import io from 'socket.io-client';
 import { configureStore } from 'redux-starter-kit';
 import faker from 'faker';
 import gon from 'gon';
+import location from 'location';
 import cookie from 'js-cookie';
 import Application from './components/Application';
 import reducer, { messages, channels } from './reducers';
@@ -40,7 +41,7 @@ const store = configureStore({
     },
   },
 });
-// eslint-disable-next-line no-restricted-globals
+
 const socket = io(location.href);
 socket.on('newMessage', (data) => {
   store.dispatch(messages.actions.addMessageSucces({ message: data.data.attributes }));

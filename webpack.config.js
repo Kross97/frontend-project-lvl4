@@ -8,6 +8,7 @@ module.exports = {
   },
   externals: {
     gon: 'gon',
+    location: 'location',
   },
   resolve: {
     extensions: ['.js', '.jsx'],
