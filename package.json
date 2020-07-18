@@ -61,7 +61,7 @@
     "koa-router": "^7.4.0",
     "koa-static": "^5.0.0",
     "koa-webpack": "^5.2.4",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "point-of-view": "^3.6.0",
     "pug": "^2.0.4",
     "react": "^16.11.0",
